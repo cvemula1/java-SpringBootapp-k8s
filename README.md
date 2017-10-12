@@ -3,15 +3,15 @@
 #Use the Jenkinsfile to use as CI/CD Pipeline  
 #######################################################################################################################
 
-#######################################################################################################################
-#Running Manually and pushing dockerimage to AWS ECR
-#######################################################################################################################
 
 # Spring Boot Web Application
+# Use the Jenkinsfile to use as CI/CD Pipeline  
 
 This repository has the project files for a tutorial series on Spring Boot available from by website at [Spring Framework Guru](https://springframework.guru)
 
-# Building Locally and Pushing it to AWS ECR
+#######################################################################################################################
+#Running Manually and pushing dockerimage to AWS ECR
+#######################################################################################################################
 
 ## Run Maven build it will create target directory
 
@@ -29,18 +29,13 @@ docker build -t testing .
 
 docker tag testing:latest AWSAccountId.dkr.ecr.us-east-1.amazonaws.com/testing:latest
 
-
 # Login to AWS ## Before this Configure AWS CLI
-
 
 ##1) Retrieve the docker login command that you can use to authenticate your Docker client to your registry:  Note: If you receive an "Unknown options: --no-include-email" error, install the latest version of the AWS CLI. 
 
-
 aws ecr get-login --no-include-email --region us-east-1
 
-
 #Above Command will generate login command to login to AWS ECS and enter that command to login
-
 
 #### Run the following command to push this image to your newly created AWS repository:
 
