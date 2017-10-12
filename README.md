@@ -1,12 +1,12 @@
 
 ##############################################################################
-# Use the Jenkinsfile to use as CI/CD Pipeline  
+# Use the Jenkinsfile as CI/CD Pipeline  
 ##############################################################################
 
 # Spring Boot Web Application CI-CD with Jenkins
 
 ###############################################################################
-#Running Manually and pushing dockerimage to AWS ECR
+# Running Manually and pushing dockerimage to AWS ECR
 ###############################################################################
 
 # Run Maven build it will create target directory
