@@ -27,7 +27,7 @@ docker tag testing:latest AWSAccountId.dkr.ecr.us-east-1.amazonaws.com/helloworl
 
 # Login to AWS ## Before this Configure AWS CLI
 
-# 1) Retrieve the docker login command that you can use to authenticate your Docker client to your registry:  Note: If you receive an "Unknown options: --no-include-email" error, install the latest version of the AWS CLI. 
+# Retrieve the docker login command that you can use to authenticate your Docker client to your registry:  Note: If you receive an "Unknown options: --no-include-email" error, install the latest version of the AWS CLI. 
 
 aws ecr get-login --no-include-email --region us-east-1
 
