@@ -1,0 +1,73 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pipeline-hello-world
+  namespace: payments-dev
+  labels:
+    app: pipeline-hello-world
+    service: ${ServiceName}    ###ServiceName
+    env: nonprod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      name: pipeline-hello-world
+      namespace: ${Kuberntes-NameSpace}     ## Kubernets namespace
+      annotations:
+        imagelabel: latest
+      labels:
+        app: pipeline-hello-world
+        service: ${ServiceName}
+        env: nonprod
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 5
+              podAffinityTerm:
+                namespaces:
+                  - pipeline-hello-world
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+                labelSelector:
+                  matchLabels:
+                    app: pipeline-hello-world
+                    service: ${ServiceName}     # K8s ServiceName
+                    env: nonprod
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: pipeline-hello-world-nonprod
+            - secretRef:
+                name: pipeline-hello-world-nonprod
+          image: <AccountNumber>.dkr.ecr.us-west-2.amazonaws.com/pipeline:latest       #ECS Docker Image repo link
+##above image is based on your ECS generated
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          name: pipeline-hello-world-nonprod
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: servicetoken
+              mountPath: /pipeline-hello-world/servicetoken
+            - name: certificate
+              mountPath: /pipeline-hello-world/certificate
+          workingDir: /pipeline-hello-world
+      volumes:
+        - name: servicetoken
+          secret:
+            secretName: pipeline-hello-world jenkins
+        - name: certificate
+          secret:
+            secretName: pipeline-hello-world jenkins

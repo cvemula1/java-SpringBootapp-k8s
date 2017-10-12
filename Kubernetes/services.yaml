@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pipeline-hello-world
+  namespace: ${Kubernetes-NameSpace}    # Kubernets namespace
+  labels:
+    app: pipeline-hello-world
+    service: <serviceName>
+    env: nonprod
+spec:
+  selector:
+    app: pipeline-hello-world
+    service: <serviceName>
+    env: nonprod
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
