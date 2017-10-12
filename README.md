@@ -21,7 +21,7 @@ docker build -t helloworld .
 
 # Tag this image as latest
 
-# After the build completes, tag your image so you can push the image to this repository:## This i am usig my personal account you can give ur AWS ECS
+# After the build completes, tag your image so you can push the image to this repository
 
 docker tag testing:latest AWSAccountId.dkr.ecr.us-east-1.amazonaws.com/helloworld :latest
 
