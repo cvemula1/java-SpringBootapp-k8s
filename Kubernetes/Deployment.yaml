@@ -42,10 +42,7 @@ spec:
         - envFrom:
             - configMapRef:
                 name: springboot
-            - secretRef:
-                name: pspringboot
           image: docker.io/chennaraov/springboot:latest   #docker hub Docker Image repo link
-##above image is based on your dockerhub generated
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -58,16 +55,3 @@ spec:
           ports:
             - name: http
               containerPort: 8080
-          volumeMounts:
-            - name: servicetoken
-              mountPath: /springboot/servicetoken
-            - name: certificate
-              mountPath: /springboot/certificate
-          workingDir: /springboot
-      volumes:
-        - name: servicetoken
-          secret:
-            secretName: springboot
-        - name: certificate
-          secret:
-            secretName: springboot
