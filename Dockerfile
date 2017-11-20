@@ -12,15 +12,15 @@ ENV JAVA_VER=1.8.0
 #         yum install -y java-1.8.0-openjdk-headless \
 #         yum clean all
 
-RUN mkdir /projectname
+RUN mkdir /springboot
 
 # Add jar file from jenkins workspace or from S3/Artifactory
 
-ADD projectname-1.0.jar /projectname
+COPY target/spring-boot-web-0.0.1-SNAPSHOT.jar /springboot
 
-WORKDIR /projectname
+WORKDIR /springboot
 
-RUN chown -R 1001:1001 /projectname
+RUN chown -R 1001:1001 /springboot
 
 USER 1001
 
@@ -30,4 +30,4 @@ USER 1001
 
 # Mention the Starting Point of the Docker Container
 
-CMD ["java","-jar","/projectname-1.0.jar"]
+CMD ["java","-jar","/spring-boot-web-0.0.1-SNAPSHOT.jar"]
