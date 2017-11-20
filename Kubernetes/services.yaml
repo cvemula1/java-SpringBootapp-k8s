@@ -1,16 +1,16 @@
-apiVersion: v1
+apiVersion: extensions/v1beta1
 kind: Service
 metadata:
-  name: pipeline-hello-world
-  namespace: ${Kubernetes-NameSpace}    # Kubernets namespace
+  name: springboot
+  namespace: default    # Kubernets namespace
   labels:
-    app: pipeline-hello-world
-    service: <serviceName>
+    app: springboot
+    service: springboot
     env: nonprod
 spec:
   selector:
-    app: pipeline-hello-world
-    service: <serviceName>
+    app: springboot
+    service: springboot
     env: nonprod
   ports:
     - name: http
