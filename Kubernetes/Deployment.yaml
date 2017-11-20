@@ -1,11 +1,11 @@
-apiVersion: apps/v1beta1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: pipeline-hello-world
-  namespace: payments-dev
+  name: springboot
+  namespace:  default
   labels:
-    app: pipeline-hello-world
-    service: ${ServiceName}    ###ServiceName
+    app: springboot
+    service: springboot    ###ServiceName
     env: nonprod
 spec:
   replicas: 2
@@ -16,13 +16,13 @@ spec:
       maxUnavailable: 0
   template:
     metadata:
-      name: pipeline-hello-world
-      namespace: ${Kuberntes-NameSpace}     ## Kubernets namespace
+      name: springboot
+      namespace: default     ## Kubernets namespace
       annotations:
         imagelabel: latest
       labels:
-        app: pipeline-hello-world
-        service: ${ServiceName}
+        app: springboot
+        service: springboot
         env: nonprod
     spec:
       affinity:
@@ -31,21 +31,21 @@ spec:
             - weight: 5
               podAffinityTerm:
                 namespaces:
-                  - pipeline-hello-world
+                  - default
                 topologyKey: failure-domain.beta.kubernetes.io/zone
                 labelSelector:
                   matchLabels:
-                    app: pipeline-hello-world
-                    service: ${ServiceName}     # K8s ServiceName
+                    app: springboot
+                    service: springboot     # K8s ServiceName
                     env: nonprod
       containers:
         - envFrom:
             - configMapRef:
-                name: pipeline-hello-world-nonprod
+                name: springboot
             - secretRef:
-                name: pipeline-hello-world-nonprod
-          image: <AccountNumber>.dkr.ecr.us-west-2.amazonaws.com/pipeline:latest       #ECS Docker Image repo link
-##above image is based on your ECS generated
+                name: pspringboot
+          image: docker.io/chennaraov/springboot:latest   #docker hub Docker Image repo link
+##above image is based on your dockerhub generated
           imagePullPolicy: Always
           livenessProbe:
             tcpSocket:
@@ -54,20 +54,20 @@ spec:
             successThreshold: 1
             initialDelaySeconds: 15
             timeoutSeconds: 2
-          name: pipeline-hello-world-nonprod
+          name: springboot
           ports:
             - name: http
               containerPort: 8080
           volumeMounts:
             - name: servicetoken
-              mountPath: /pipeline-hello-world/servicetoken
+              mountPath: /springboot/servicetoken
             - name: certificate
-              mountPath: /pipeline-hello-world/certificate
-          workingDir: /pipeline-hello-world
+              mountPath: /springboot/certificate
+          workingDir: /springboot
       volumes:
         - name: servicetoken
           secret:
-            secretName: pipeline-hello-world jenkins
+            secretName: springboot
         - name: certificate
           secret:
-            secretName: pipeline-hello-world jenkins
+            secretName: springboot
