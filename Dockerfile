@@ -1,5 +1,5 @@
 #Get base image having openjdk version 8
-FROM openjdk:8u131-jre
+FROM openjdk:24-ea-7-oraclelinux8
 
 MAINTAINER Chenna Vemula <cvemula.unix@gmail.com>
 #Expose ports
