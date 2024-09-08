@@ -1,5 +1,5 @@
 #Get base image having openjdk version 8
-FROM openjdk:8u131-jre
+FROM openjdk:8u332-jre
 
 MAINTAINER Chenna Vemula <cvemula.unix@gmail.com>
 #Expose ports
